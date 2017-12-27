@@ -6,7 +6,7 @@ data Doc = ToBeDefined
          deriving (Show)
 
 string :: String -> Doc
-string str = enclose '"' '"' . hcat . map oneChar
+string = enclose '"' '"' . hcat . map oneChar
 
 text :: String -> Doc
 text str = undefined
@@ -22,3 +22,9 @@ a <> b = undefined
 
 char :: Char -> Doc
 char c = undefined
+
+hcat :: [Doc] -> Doc
+hcat xs = undefined
+
+oneChar :: Char -> Doc
+oneChar c = undefined
