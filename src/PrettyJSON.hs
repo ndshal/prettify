@@ -1,8 +1,15 @@
-module PrettyJSON where
+module PrettyJSON
+    (
+      renderJValue
+    ) where
 
-import Prettify
 import Data.Bits (shiftR, (.&.))
+import Data.Char (ord)
 import Numeric (showHex)
+
+import SimpleJSON (JValue(..))
+import Prettify (Doc, (<>), char, double, fsep, hcat, punctuate, text
+                 compact, pretty)
 
 renderJValue :: JValue -> Doc
 renderJValue (JString str) = string str
