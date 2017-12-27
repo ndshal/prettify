@@ -1,5 +1,7 @@
 module Prettify where
 
+import Data.Bits
+import Numeric (showHex)
 import SimpleJSON
 
 data Doc = ToBeDefined
@@ -36,3 +38,9 @@ oneChar c = case lookup c simpleEscapes of
 simpleEscapes :: [(Char, String)]
 simpleEscapes = zipWith ch "\b\n\f\r\t\\\"/" "bnfrt\\\"/"
     where ch a b = (a, ['\\', b])
+
+smallHex :: Int -> Doc
+smallHex x = text "\\u"
+          <> text (replicate (4 - length h) '0')
+          <> text h
+    where h = showHex x ""
