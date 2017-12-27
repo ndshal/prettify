@@ -12,6 +12,10 @@ renderJValue JNull         = text "null"
 string :: String -> Doc
 string = enclose '"' '"' . hcat . map oneChar
 
+series :: Char -> Char -> (a -> Doc) -> [a] -> Doc
+series open close renderItem = enclose open close
+                             . fsep . punctuate (char ',') . map renderItem
+
 enclose :: Char -> Char -> Doc -> Doc
 enclose left right x = char left <> x <> char right
 
