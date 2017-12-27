@@ -1,3 +1,5 @@
+module Prettify where
+
 import SimpleJSON
 
 data Doc = ToBeDefined
