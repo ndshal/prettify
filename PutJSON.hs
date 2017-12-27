@@ -19,3 +19,6 @@ renderJValue (JObject o) = "{" ++ pairs o ++ "}"
 renderJValue (JArray a) = "[" ++ values ++ "]"
     where values [] = ""
           values vs = intercalate ", " (map renderJValue vs)
+
+putJValue :: JValue -> IO ()
+putJValue = ptStrLine . renderJValue
