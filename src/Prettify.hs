@@ -24,7 +24,10 @@ fsep xs = undefined
 compact :: Doc -> String
 compact x = undefined
 
+pretty :: Int -> Doc -> String
+pretty width x = undefined
+
 punctuate :: Doc -> [Doc] -> [Doc]
 punctuate p []       = []
 punctuate p [d]      = [d]
-punctuate [p] (d:ds) = (d <> p) : punctuate p ds
+punctuate p (d:ds) = (d <> p) : punctuate p ds

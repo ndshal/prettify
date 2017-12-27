@@ -8,7 +8,7 @@ import Data.Char (ord)
 import Numeric (showHex)
 
 import SimpleJSON (JValue(..))
-import Prettify (Doc, (<>), char, double, fsep, hcat, punctuate, text
+import Prettify (Doc, (<>), char, double, fsep, hcat, punctuate, text,
                  compact, pretty)
 
 renderJValue :: JValue -> Doc
