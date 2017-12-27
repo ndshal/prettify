@@ -21,6 +21,9 @@ hcat xs = undefined
 fsep :: [Doc] -> Doc
 fsep xs = undefined
 
+compact :: Doc -> String
+compact x = undefined
+
 punctuate :: Doc -> [Doc] -> [Doc]
 punctuate p []       = []
 punctuate p [d]      = [d]
