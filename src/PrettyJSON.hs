@@ -10,6 +10,11 @@ renderJValue (JNumber num) = double num
 renderJValue (JBool False) = text "false"
 renderJValue (JBool True)  = text "true"
 renderJValue JNull         = text "null"
+renderJValue (JArray ary)  = series '[' ']' renderJValue ary
+renderJValue (JObject obj) = series '{' '}' renderField obj
+    where renderField (name, val) = string name
+                                 <> text ": "
+                                 <> renderJValue val
 
 string :: String -> Doc
 string = enclose '"' '"' . hcat . map oneChar
