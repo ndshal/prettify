@@ -13,3 +13,12 @@ text str = undefined
 
 double :: Double -> Doc
 double num = undefined
+
+enclose :: Char -> Char -> Doc -> Doc
+enclose left right x = char left <> x <> char right
+
+(<>) :: Doc -> Doc -> Doc
+a <> b = undefined
+
+char :: Char -> Doc
+char c = undefined
