@@ -1,3 +1,14 @@
+module SimpleJSON
+    (
+      JValue (..)
+    , getString
+    , getInt
+    , getDouble
+    , getBool
+    , getObject
+    , getArray
+    , isNull
+    ) where
 
 -- constructor for JValue type.
 data JValue = JString String
