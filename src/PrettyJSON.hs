@@ -1,6 +1,8 @@
 module PrettyJSON where
 
 import Prettify
+import Data.Bits (shiftR, (.&.))
+import Numeric (showHex)
 
 renderJValue :: JValue -> Doc
 renderJValue (JString str) = string str
