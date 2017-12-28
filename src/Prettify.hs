@@ -11,17 +11,24 @@ data Doc = Empty
          | Union Doc Doc
          deriving (Eq, Show)
 
+empty :: Doc
+empty = Empty
+
+char :: Char -> Doc
+char c = Char c
+
 text :: String -> Doc
-text str = undefined
+text ""  = Empty
+text str = Text str
 
 double :: Double -> Doc
-double num = undefined
+double num = text (show num)
+
+line :: Doc
+line = Line
 
 (<>) :: Doc -> Doc -> Doc
 a <> b = undefined
-
-char :: Char -> Doc
-char c = undefined
 
 hcat :: [Doc] -> Doc
 hcat xs = undefined
