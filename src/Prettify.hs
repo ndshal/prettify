@@ -1,7 +1,15 @@
-module Prettify where
+module Prettify
+  (
+    Doc
+  ) where
 
-data Doc = ToBeDefined
-         deriving (Show)
+data Doc = Empty
+         | Char Char
+         | Text String
+         | Line
+         | Concat Doc Doc
+         | Union Doc Doc
+         deriving (Eq, Show)
 
 text :: String -> Doc
 text str = undefined
