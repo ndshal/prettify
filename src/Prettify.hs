@@ -63,7 +63,7 @@ fsep = fold (</>)
 fold :: (Doc -> Doc -> Doc) -> [Doc] -> Doc
 fold f = foldr f empty
 
--- toString style methods.
+-- compact toString method. Treats all softlines as spaces.
 compact :: Doc -> String
 compact x = transform [x]
     where transform [] = ""
@@ -76,8 +76,24 @@ compact x = transform [x]
                   a `Concat` b -> transform (a:b:ds)
                   _ `Union` b  -> transform (b:ds)
 
+-- simple formatted toString method.
+-- The Int parameter is the line / page width.
 pretty :: Int -> Doc -> String
-pretty width x = undefined
+pretty width x = best 0 [x]
+    where best col (d:ds) =
+        case d of
+            Empty        -> best col ds
+            Char c       -> c : best (col + 1) ds
+            Text s       -> s ++ best (col + length s) ds
+            Line         -> '\n' : best 0 ds
+            a `Concat` b -> best col (a:b:ds)
+            a `Union` b  -> nicest (best col (a:ds))
+                                   (best col (b:ds))
+          best _ _ = ""
+
+          nicest col a b = | (width - least) `fits` a = a
+                           | otherwise                = b
+                           where least = min width col
 
 punctuate :: Doc -> [Doc] -> [Doc]
 punctuate p []       = []
