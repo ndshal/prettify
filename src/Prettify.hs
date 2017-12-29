@@ -95,6 +95,14 @@ pretty width x = best 0 [x]
                            | otherwise                = b
                            where least = min width col
 
+-- helper method to determine whether a given number of columns
+-- fits a string
+fits :: Int -> String -> Bool
+w `fits` _ | w < 0 = False
+w `fits` ""        = True
+w `fits` ('\n':_)  = True
+w `fits` (c:cs)    = (w - 1) `fits` cs
+
 punctuate :: Doc -> [Doc] -> [Doc]
 punctuate p []       = []
 punctuate p [d]      = [d]
