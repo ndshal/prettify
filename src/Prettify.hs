@@ -1,6 +1,18 @@
 module Prettify
   (
-    Doc
+    Doc,
+    empty,
+    char,
+    text,
+    double,
+    line,
+    (<>),
+    (</>),
+    hcat,
+    fsep,
+    punctuate,
+    compact,
+    pretty
   ) where
 
 data Doc = Empty
