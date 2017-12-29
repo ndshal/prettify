@@ -63,8 +63,18 @@ fsep = fold (</>)
 fold :: (Doc -> Doc -> Doc) -> [Doc] -> Doc
 fold f = foldr f empty
 
+-- toString style methods.
 compact :: Doc -> String
-compact x = undefined
+compact x = transform [x]
+    where transform [] = ""
+          transform (d:ds) =
+              case d of
+                  Empty        -> transform ds
+                  Char c       -> c : transform ds
+                  Text s       -> s ++ transform ds
+                  Line         -> '\n' : transform ds
+                  a `Concat` b -> transform (a:b:ds)
+                  _ `Union` b  -> transform (b:ds)
 
 pretty :: Int -> Doc -> String
 pretty width x = undefined
