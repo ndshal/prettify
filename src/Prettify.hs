@@ -12,6 +12,7 @@ module Prettify
     fsep,
     punctuate,
     fill,
+    nest,
     compact,
     pretty
   ) where
@@ -124,3 +125,8 @@ punctuate p (d:ds) = (d <> p) : punctuate p ds
 -- helper method to pad the front of a Doc with spaces
 fill :: Int -> Doc -> Doc
 fill width x = undefined
+
+-- helper method to nest subsequent lines of a Doc based on
+-- {[( characters.
+nest :: Int -> Doc -> Doc
+nest indent x = undefined
