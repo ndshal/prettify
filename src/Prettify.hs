@@ -11,6 +11,7 @@ module Prettify
     hcat,
     fsep,
     punctuate,
+    fill,
     compact,
     pretty
   ) where
@@ -119,3 +120,7 @@ punctuate :: Doc -> [Doc] -> [Doc]
 punctuate p []       = []
 punctuate p [d]      = [d]
 punctuate p (d:ds) = (d <> p) : punctuate p ds
+
+-- helper method to pad the front of a Doc with spaces
+fill :: Int -> Doc -> Doc
+fill width x = undefined
