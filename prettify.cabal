@@ -1,9 +1,10 @@
-Name:         my-prettify
-Version:      0.1
-Synopsis:     A pretty printing library, with JSON support
-Author:       Nikita Shalimov, based on code samples in Real World Haskell
-Cabal-Version: >= 1.2
+Name:           my-prettify
+Version:        0.1
+Synopsis:       A pretty printing library, with JSON support
+Author:         Nikita Shalimov, based on code samples in Real World Haskell
+Cabal-Version:  >= 1.2
 library
+  hs-source-dirs: ., src
   Exposed-Modules: Prettify
                    SimpleJSON
                    PrettyJSON
