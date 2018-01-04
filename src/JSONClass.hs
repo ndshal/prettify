@@ -53,10 +53,6 @@ instance JSON String where
     fromJValue (JString s) = Right s
     fromJValue _           = Left "not a JSON string"
 
-doubleToJValue :: (Double -> a) -> JValue -> Either JSONError a
-doubleToJValue f (JNumber v) = Right (f v)
-doubleToJValue _ _           = Left "not a JSON number"
-
 instance JSON Int where
     toJValue   = JNumber . realToFrac
     fromJValue = doubleToJValue round
@@ -69,17 +65,16 @@ instance JSON Double where
     toJValue   = JNumber
     fromJValue = doubleToJValue id
 
-jaryToJValue :: (JSON a) => JAry a -> JValue
-jaryToJValue = JArray . JAry . map toJValue . fromJAry
-
-jaryFromJValue :: (JSON a) => JValue -> Either JSONError (JAry a)
-jaryFromJValue (JArray (JAry a)) =
-    whenRight JAry (mapEithers fromJValue a)
-jaryFromJValue _ = Left "not a JSON array"
-
 instance (JSON a) => JSON (JAry a) where
-    toJValue   = jaryToJValue
-    fromJValue = jaryFromJValue
+    toJValue = JArray . JAry . map toJValue . fromJAry
+
+    fromJValue (JArray (JAry a)) =
+      whenRight JAry (mapEithers fromJValue a)
+    fromJValue _ = Left "not a JSON array"
+
+doubleToJValue :: (Double -> a) -> JValue -> Either JSONError a
+doubleToJValue f (JNumber v) = Right (f v)
+doubleToJValue _ _           = Left "not a JSON number"
 
 whenRight :: (b -> c) -> Either a b -> Either a c
 whenRight _ (Left err) = Left err
