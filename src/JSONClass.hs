@@ -80,3 +80,15 @@ jaryFromJValue _ = Left "not a JSON array"
 instance (JSON a) => JSON (JAry a) where
     toJValue   = jaryToJValue
     fromJValue = jaryFromJValue
+
+whenRight :: (b -> c) -> Either a b -> Either a c
+whenRight _ (Left err) = Left err
+whenRight f (Right b)  = Right (f b)
+
+mapEithers :: (a -> Either b c) -> [a] -> Either b [c]
+mapEithers f (x:xs) = case mapEithers f xs of
+                        Left err -> Left err
+                        Right ys -> case f x of
+                                      Left err -> Left err
+                                      Right y -> Right (y:ys)
+mapEithers _ _      = Right []
