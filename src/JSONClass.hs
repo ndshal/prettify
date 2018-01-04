@@ -76,7 +76,7 @@ instance (JSON a) => JSON (JAry a) where
 instance (JSON a) => JSON (JObj a) where
     toJValue = JObject . JObj . map (second toJValue) . fromJObj
 
-    fromJValue (JObject (JObj a)) = whenRight JObj (mapEithers unwrap o)
+    fromJValue (JObject (JObj o)) = whenRight JObj (mapEithers unwrap o)
         where unwrap (k, v) = whenRight ((,) k) (fromJValue v)
     fromJValue _ = Left "not a JSON object"
 
