@@ -7,7 +7,7 @@ import Data.Bits (shiftR, (.&.))
 import Data.Char (ord)
 import Numeric (showHex)
 
-import SimpleJSON (JValue(..))
+import JSONClass (JValue(..))
 import Prettify (Doc, (<>), char, text, double, hcat, fsep, punctuate,
                  fill, nest, compact, pretty)
 
