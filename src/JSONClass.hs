@@ -1,5 +1,7 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 
+import Control.Arrow (second)
+
 module JSONClass
     (
       JValue(..)
@@ -68,9 +70,15 @@ instance JSON Double where
 instance (JSON a) => JSON (JAry a) where
     toJValue = JArray . JAry . map toJValue . fromJAry
 
-    fromJValue (JArray (JAry a)) =
-      whenRight JAry (mapEithers fromJValue a)
+    fromJValue (JArray (JAry a)) = whenRight JAry (mapEithers fromJValue a)
     fromJValue _ = Left "not a JSON array"
+
+instance (JSON a) => JSON (JObj a) where
+    toJValue = JObject . JObj . map (second toJValue) . fromJObj
+
+    fromJValue (JObject (JObj a)) = whenRight JObj (mapEithers unwrap o)
+        where unwrap (k, v) = whenRight ((,) k) (fromJValue v)
+    fromJValue _ = Left "not a JSON object"
 
 doubleToJValue :: (Double -> a) -> JValue -> Either JSONError a
 doubleToJValue f (JNumber v) = Right (f v)
