@@ -55,6 +55,9 @@ jaryToJValue :: (JSON a) => JAry a -> JValue
 jaryToJValue = JArray . JAry . map toJValue . fromJAry
 
 jaryFromJValue :: (JSON a) => JValue -> Either JSONError (JAry a)
+jaryFromJValue (JArray (JAry a)) =
+    whenRight JAry (mapEithers fromJValue a)
+jaryFromJValue _ = Left "not a JSON array"
 
 instance (JSON a) => JSON (JAry a) where
     toJValue   = jaryToJValue
