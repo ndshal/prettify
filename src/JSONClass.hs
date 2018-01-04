@@ -52,6 +52,7 @@ newtype JAry a = JAry {
     } deriving (Eq, Ord, Show)
 
 jaryToJValue :: (JSON a) => JAry a -> JValue
+jaryToJValue = JArray . JAry . map toJValue . fromJAry
 
 jaryFromJValue :: (JSON a) => JValue -> Either JSONError (JAry a)
 
