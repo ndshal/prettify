@@ -51,6 +51,14 @@ newtype JAry a = JAry {
       fromJAry :: [a]
     } deriving (Eq, Ord, Show)
 
+jaryToJValue :: (JSON a) => JAry a -> JValue
+
+jaryFromJValue :: (JSON a) => JValue -> Either JSONError (JAry a)
+
+instance (JSON a) => JSON (JAry a) where
+    toJValue   = jaryToJValue
+    fromJValue = jaryFromJValue
+
 newtype JObj a = JObj {
       fromJObj :: [(String, a)]
     } deriving (Eq, Ord, Show)
