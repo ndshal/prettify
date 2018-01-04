@@ -1,6 +1,4 @@
-{-# LANGUAGE TypeSynonymInstances #-}
-
-import Control.Arrow (second)
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 
 module JSONClass
     (
@@ -9,6 +7,8 @@ module JSONClass
       , JObj(..)
       , isNull
     ) where
+
+import Control.Arrow (second)
 
 data JValue = JString String
             | JNumber Double
