@@ -2,8 +2,29 @@
 
 module JSONClass
     (
-      JAry(..)
+      JValue(..)
+      , JAry(..)
+      , JObj(..)
+      , isNull
     ) where
+
+data JValue = JString String
+            | JNumber Double
+            | JBool Bool
+            | JNull
+            | JArray (JAry JValue)
+            | JObject (JObj JValue)
+              deriving (Eq, Ord, Show)
+
+newtype JAry a = JAry {
+      fromJAry :: [a]
+    } deriving (Eq, Ord, Show)
+
+newtype JObj a = JObj {
+      fromJObj :: [(String, a)]
+    } deriving (Eq, Ord, Show)
+
+isNull v = v == JNull
 
 type JSONError = String
 
@@ -19,6 +40,7 @@ instance JSON Bool where
     toJValue             = JBool
     fromJValue (JBool b) = Right b
     fromJValue _         = Left "not a JSON boolean"
+
 {-
  Without the TypeSynonymInstances pragma, the following code would break
  at compile time - String is a synonym for [Char], which is in turn [a]
@@ -47,10 +69,6 @@ instance JSON Double where
     toJValue   = JNumber
     fromJValue = doubleToJValue id
 
-newtype JAry a = JAry {
-      fromJAry :: [a]
-    } deriving (Eq, Ord, Show)
-
 jaryToJValue :: (JSON a) => JAry a -> JValue
 jaryToJValue = JArray . JAry . map toJValue . fromJAry
 
@@ -62,7 +80,3 @@ jaryFromJValue _ = Left "not a JSON array"
 instance (JSON a) => JSON (JAry a) where
     toJValue   = jaryToJValue
     fromJValue = jaryFromJValue
-
-newtype JObj a = JObj {
-      fromJObj :: [(String, a)]
-    } deriving (Eq, Ord, Show)
